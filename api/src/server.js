@@ -1,4 +1,5 @@
 require('dotenv').config({path:'../api/.env'})
+require('./config/mongo');
 const http = require('http');
 const app = require('./app');
 
