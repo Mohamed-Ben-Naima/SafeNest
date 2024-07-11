@@ -1,6 +1,8 @@
 const express = require ('express');
 const morgan = require('morgan');
+const cors=require('cors');
 
+const authRouter=require('../src/authentication/routers/auth.router');
 const userRouter = require ('../src/user/routes/userRouter');
 
 const app=express()
@@ -8,8 +10,10 @@ const app=express()
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(morgan('dev'))
+app.use(cors())
 
-app.use('/api/v1/user',userRouter)
+app.use('/api/v1/auth',authRouter)
+app.use('/api/v1/users',userRouter)
 
 
 app.use((error,req,res,next)=>{

@@ -4,9 +4,9 @@ const userService = require("../services/userService");
 const getOthersController = async (req, res, next) => {
   try {
     // 0 if the user is not authenticated then throw error
-    if (!req.user) {
-      next(new Error("Your are not authenticated yet get Other people"));
-    }
+    // if (!req.user) {
+    //   next(new Error("Your are not authenticated yet get Other people"));
+    // }
 
     // 1 get the page,limit from the query params
     let page = parseInt(req.query.page);
@@ -43,13 +43,15 @@ const getOthersController = async (req, res, next) => {
     if (search) {
       others = await User.find({
         $text: { $search: search },
-        _id: { $ne: req.user.user_id },
+        // _id: { $ ne: req.user.user_id },
+        _id: { $ne: req.body.user_id },
       })
         .limit(limit)
         .skip(startIndex)
         .exec();
     } else {
-      others = await User.find({ _id: { $ne: req.user.user_id } })
+      // others = await User.find({ _id: { $ne: req.user.user_id } })
+      others = await User.find({ _id: { $ne: req.body.user_id } })
         .limit(limit)
         .skip(startIndex)
         .exec();
@@ -60,15 +62,22 @@ const getOthersController = async (req, res, next) => {
   }
 };
 
+// const getOthersController = async (req, res, next) => {
+//   try {
+//     const others = await userService.getOtherUsers();
+//     res.status(200).json({ data: others });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 const getAllUsersController = async (req, res, next) => {
   try {
     if (!req.user) {
       next(new Error("Your are not authenticated yet get Other people"));
     }
-
-    let others;
-    others = await userService.getAllUsers;
-    res.status(200).json({ data: others });
+    const allUsers = await userService.getAllUsers();
+    res.status(200).json({ data: allUsers });
   } catch (error) {
     next(error);
   }

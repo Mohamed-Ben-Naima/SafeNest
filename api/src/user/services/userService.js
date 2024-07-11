@@ -1,17 +1,7 @@
 const User = require("../model/user.model");
 
 const getAllUsers = async () => {
-  const others = await User.find().select({
-    _id: 1,
-    displayName: 1,
-    username: 1,
-    email: 1,
-    avatar: 1,
-    role: 1,
-    dateOfBirth: 1,
-    isActive: 1,
-  });
-
+  const others = await User.find().exec();
   if (!others) {
     throw Error("There is no one else except you");
   }
@@ -51,7 +41,7 @@ const addUser = async (_user) => {
 };
 
 module.exports = {
-    getAllUsers,
-    getOtherUsers,
-    addUser
-}
+  getAllUsers,
+  getOtherUsers,
+  addUser,
+};
