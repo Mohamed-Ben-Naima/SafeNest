@@ -2,8 +2,9 @@ const express = require ('express');
 const morgan = require('morgan');
 const cors=require('cors');
 
-const authRouter=require('../src/authentication/routers/auth.router');
+const authRouter = require('../src/authentication/routers/auth.router');
 const userRouter = require ('../src/user/routes/userRouter');
+const eventRouter = require ('../src/event/routers/event.router');
 
 const app=express()
 
@@ -14,7 +15,7 @@ app.use(cors())
 
 app.use('/api/v1/auth',authRouter)
 app.use('/api/v1/users',userRouter)
-
+app.use('/api/v1/events',eventRouter)
 
 app.use((error,req,res,next)=>{
     res.status(500).json({
