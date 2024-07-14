@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 
-export default function MenuButton({ navigation }) {
+const MenuButton = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -27,15 +28,7 @@ export default function MenuButton({ navigation }) {
             >
               <Text style={styles.menuOptionText}>Home</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setModalVisible(false);
-                navigation.navigate('Home');
-              }}
-              style={styles.menuOption}
-            >
-              <Text style={styles.menuOptionText}>Login</Text>
-            </TouchableOpacity>
+
             <TouchableOpacity
               onPress={() => {
                 setModalVisible(false);
@@ -43,18 +36,21 @@ export default function MenuButton({ navigation }) {
               }}
               style={styles.menuOption}
             >
-              <Text style={styles.menuOptionText}>Register</Text>
+              <Text style={styles.menuOptionText}>Login</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
     </View>
   );
-}
+};
+
+MenuButton.propTypes = {
+  navigation: PropTypes.object.isRequired,
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -90,3 +86,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
+
+export default MenuButton;
