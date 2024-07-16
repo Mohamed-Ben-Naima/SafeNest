@@ -38,6 +38,16 @@ const MenuButton = ({ navigation }) => {
             >
               <Text style={styles.menuOptionText}>Login</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                setModalVisible(false);
+                navigation.navigate('Register');
+              }}
+              style={styles.menuOption}
+            >
+              <Text style={styles.menuOptionText}>Register</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>

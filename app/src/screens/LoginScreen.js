@@ -34,7 +34,7 @@ export default function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/bg.png")}
+        source={require("../../assets/4.jpg")}
         style={styles.background}
       >
         <View style={styles.overlay}>
@@ -80,8 +80,9 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-            <Text style={styles.registerText}>
-              Don't have an account? Register
+            <Text style={styles.text}>
+              Don't have an account?{" "}
+              <Text style={styles.registerText}>Register</Text>
             </Text>
           </TouchableOpacity>
         </View>
@@ -165,9 +166,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  registerText: {
-    color: "#7B1FA2",
+  text: {
+    color: "#2E2933",
     fontSize: 15,
+    marginTop: 20,
+  },
+  registerText: {
+    color: "#3D007A",
+    fontSize: 15,
+    fontWeight: "bold",
     marginTop: 20,
   },
 });
