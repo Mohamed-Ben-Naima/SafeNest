@@ -1,10 +1,20 @@
 // src/screens/LoginScreen.js
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+  Alert,
+} from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome"; // Example icon library
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = () => {
     if (email === "" || password === "") {
@@ -17,35 +27,62 @@ export default function LoginScreen({ navigation }) {
     navigation.navigate("Home");
   };
 
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../../assets/bg.png')} style={styles.background}>
+      <ImageBackground
+        source={require("../../assets/bg.png")}
+        style={styles.background}
+      >
         <View style={styles.overlay}>
           <Text style={styles.title}>Welcome Back</Text>
           <Text style={styles.subtitle}>Log in to your account</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            placeholderTextColor="#888"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            placeholderTextColor="#888"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-            autoCapitalize="none"
-          />
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter Email"
+              placeholderTextColor="#888"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+            <Icon
+              name="envelope"
+              size={20}
+              color="#888"
+              style={styles.inputIcon}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter Password"
+              placeholderTextColor="#888"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={!showPassword}
+              autoCapitalize="none"
+            />
+            <TouchableOpacity onPress={toggleShowPassword}>
+              <Icon
+                name={showPassword ? "unlock" : "lock"}
+                size={20}
+                color="#888"
+                style={styles.inputIcon}
+              />
+            </TouchableOpacity>
+          </View>
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-            <Text style={styles.registerText}>Don't have an account? Register</Text>
+            <Text style={styles.registerText}>
+              Don't have an account? Register
+            </Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -86,20 +123,28 @@ const styles = StyleSheet.create({
     color: "#4A148C",
     marginBottom: 32,
   },
-  input: {
-    width: "100%",
-    height: 50,
-    backgroundColor: "#F1E7FA",
+  inputContainer: {
+    backgroundColor: "#F1E7FA", //*
     borderRadius: 10,
     paddingHorizontal: 16,
     fontSize: 16,
-    marginBottom: 20,
     color: "#4A148C",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 2,
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    marginBottom: 20,
+  },
+  inputIcon: {
+    marginRight: 10,
+  },
+  input: {
+    flex: 1,
+    height: 50,
   },
   button: {
     width: "100%",
