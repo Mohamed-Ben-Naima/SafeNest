@@ -19,7 +19,12 @@ export default function RegisterScreen({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleRegister = () => {
-    if (name === "" || email === "" || password === "" || confirmPassword === "") {
+    if (
+      name === "" ||
+      email === "" ||
+      password === "" ||
+      confirmPassword === ""
+    ) {
       Alert.alert("Error", "Please fill all the fields.");
       return;
     }
@@ -55,12 +60,7 @@ export default function RegisterScreen({ navigation }) {
               onChangeText={setName}
               autoCapitalize="words"
             />
-            <Icon
-              name="user"
-              size={20}
-              color="#888"
-              style={styles.inputIcon}
-            />
+            <Icon name="user" size={20} color="#888" style={styles.inputIcon} />
           </View>
           <View style={styles.inputContainer}>
             <TextInput
