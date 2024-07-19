@@ -10,21 +10,30 @@ import {
   Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome"; // Example icon library
+import { useAuth } from "../hooks/useAuth";
 
 export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { isPending, login } = useAuth();
+  const [loginForm, setLoginForm] = useState({
+    email: "",
+    password: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = () => {
-    if (email === "" || password === "") {
+  const handleLogin = async () => {
+    if (loginForm.email === "" || loginForm.password === "") {
       Alert.alert("Error", "Please enter both email and password.");
       return;
     }
     // Handle login logic here
-    Alert.alert("Success", "Login successful!");
-    // Navigate to the HomeScreen after successful login
-    navigation.navigate("Home");
+    const result = await login(loginForm.email, loginForm.password);
+    if (result.status) {
+      Alert.alert("Success", result.message);
+      // Navigate to the HomeScreen after successful login
+      navigation.navigate("Home");
+    } else {
+      Alert.alert("Error", result.message);
+    }
   };
 
   const toggleShowPassword = () => {
@@ -45,8 +54,13 @@ export default function LoginScreen({ navigation }) {
               style={styles.input}
               placeholder="Enter Email"
               placeholderTextColor="#888"
-              value={email}
-              onChangeText={setEmail}
+              value={loginForm.email}
+              onChangeText={(text) =>
+                setLoginForm((prev) => ({
+                  ...prev,
+                  email: text,
+                }))
+              }
               keyboardType="email-address"
               autoCapitalize="none"
             />
@@ -62,8 +76,13 @@ export default function LoginScreen({ navigation }) {
               style={styles.input}
               placeholder="Enter Password"
               placeholderTextColor="#888"
-              value={password}
-              onChangeText={setPassword}
+              value={loginForm.password}
+              onChangeText={(text) =>
+                setLoginForm((prev) => ({
+                  ...prev,
+                  password: text,
+                }))
+              }
               secureTextEntry={!showPassword}
               autoCapitalize="none"
             />

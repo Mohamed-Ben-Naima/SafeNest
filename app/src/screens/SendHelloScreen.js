@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import useHello from "../hooks/useHello";
+import { useAuth } from "../hooks/useAuth";
+import MenuButton from "../components/MenuButton";
 
 export default function HomeScreen({ navigation }) {
   const { sendHelloToServer } = useHello();
@@ -17,9 +19,13 @@ export default function HomeScreen({ navigation }) {
     }
   };
 
+  const { user } = useAuth();
+  console.log(user)
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Hello Screen</Text>
+      <MenuButton navigation={navigation} />
 
       <TouchableOpacity onPress={handleSendHello} style={styles.menuButton}>
         <Text>Send Hello</Text>

@@ -10,32 +10,45 @@ import {
   Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { useAuth } from "../hooks/useAuth";
 
 export default function RegisterScreen({ navigation }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { isPending, register } = useAuth();
+  const [userForm, setUserForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (
-      name === "" ||
-      email === "" ||
-      password === "" ||
+      userForm.username === "" ||
+      userForm.email === "" ||
+      userForm.password === "" ||
       confirmPassword === ""
     ) {
       Alert.alert("Error", "Please fill all the fields.");
       return;
     }
-    if (password !== confirmPassword) {
+    if (userForm.password !== confirmPassword) {
       Alert.alert("Error", "Passwords do not match.");
       return;
     }
     // Handle register logic here
-    Alert.alert("Success", "Registration successful!");
-    // Navigate to the HomeScreen after successful registration
-    navigation.navigate("Home");
+    const result = await register(
+      userForm.username,
+      userForm.email,
+      userForm.password
+    );
+    if (result.status) {
+      Alert.alert("Success", result.message);
+      // Navigate to the HomeScreen after successful registration
+      navigation.navigate("Home");
+    } else {
+      Alert.alert("Error", result.message);
+    }
   };
 
   const toggleShowPassword = () => {
@@ -45,7 +58,7 @@ export default function RegisterScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/4.jpg")}
+        source={require("../../assets/2.jpg")}
         style={styles.background}
       >
         <View style={styles.overlay}>
@@ -56,8 +69,13 @@ export default function RegisterScreen({ navigation }) {
               style={styles.input}
               placeholder="Enter Name"
               placeholderTextColor="#888"
-              value={name}
-              onChangeText={setName}
+              value={userForm.username}
+              onChangeText={(text) =>
+                setUserForm((prev) => ({
+                  ...prev,
+                  username: text,
+                }))
+              }
               autoCapitalize="words"
             />
             <Icon name="user" size={20} color="#888" style={styles.inputIcon} />
@@ -67,8 +85,13 @@ export default function RegisterScreen({ navigation }) {
               style={styles.input}
               placeholder="Enter Email"
               placeholderTextColor="#888"
-              value={email}
-              onChangeText={setEmail}
+              value={userForm.email}
+              onChangeText={(text) =>
+                setUserForm((prev) => ({
+                  ...prev,
+                  email: text,
+                }))
+              }
               keyboardType="email-address"
               autoCapitalize="none"
             />
@@ -84,8 +107,13 @@ export default function RegisterScreen({ navigation }) {
               style={styles.input}
               placeholder="Enter Password"
               placeholderTextColor="#888"
-              value={password}
-              onChangeText={setPassword}
+              value={userForm.password}
+              onChangeText={(text) =>
+                setUserForm((prev) => ({
+                  ...prev,
+                  password: text,
+                }))
+              }
               secureTextEntry={!showPassword}
               autoCapitalize="none"
             />
