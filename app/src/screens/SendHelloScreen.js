@@ -19,8 +19,13 @@ export default function HomeScreen({ navigation }) {
     }
   };
 
-  const { user } = useAuth();
-  console.log(user)
+  const handleLogout = () => {
+    logout();
+    navigation.navigate("GetStarted");
+  };
+
+  const { user, logout } = useAuth();
+  console.log(user);
 
   return (
     <View style={styles.container}>
@@ -29,6 +34,10 @@ export default function HomeScreen({ navigation }) {
 
       <TouchableOpacity onPress={handleSendHello} style={styles.menuButton}>
         <Text>Send Hello</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={handleLogout} style={styles.menuButton}>
+        <Text>logout</Text>
       </TouchableOpacity>
 
       {responseMessage ? (

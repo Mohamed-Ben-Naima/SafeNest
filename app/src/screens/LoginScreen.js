@@ -30,7 +30,7 @@ export default function LoginScreen({ navigation }) {
     if (result.status) {
       Alert.alert("Success", result.message);
       // Navigate to the HomeScreen after successful login
-      navigation.navigate("Home");
+      navigation.navigate("Hello");
     } else {
       Alert.alert("Error", result.message);
     }
