@@ -1,35 +1,62 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const eventSchema = new mongoose.Schema(
+// Base Event Schema
+const eventSchema = new Schema(
   {
-    type: {
-      type: String,
-      required: true,
-    },
-    details: {
-      type: String,
-      trim: true,
-      maxlength: 500,
-    },
-    timestamp: {
-      type: Date,
-      required: true,
-    },
-    organizer: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User", 
-      required: true,
-    },
-    participants: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    }]
+    eventId: { type: String, required: true, },
+    eventType: { type: String, required: true },
+    timestamp: { type: Date, default: Date.now, required: true },
+    payload: { type: Schema.Types.Mixed, required: true },
   },
-  {
-    timestamps: true, // Adds createdAt and updatedAt timestamps
-  }
+  { discriminatorKey: "eventType" },
+  { timestamps: true }
 );
 
+// Event Model
 const Event = mongoose.model("Event", eventSchema);
 
-module.exports = Event;
+// Specific Event Schemas
+const temperatureRecordedSchema = new Schema({
+  payload: {
+    sensorId: { type: String, required: true },
+    temperature: { type: Number, required: true },
+    unit: { type: String, required: true },
+  },
+});
+
+const humidityRecordedSchema = new Schema({
+  payload: {
+    sensorId: { type: String, required: true },
+    humidity: { type: Number, required: true },
+  },
+});
+
+const deviceCommandIssuedSchema = new Schema({
+  payload: {
+    deviceId: { type: String, required: true },
+    command: { type: String, required: true },
+    parameters: { type: Schema.Types.Mixed },
+  },
+});
+
+// Discriminators for specific event types
+const TemperatureRecorded = Event.discriminator(
+  "TemperatureRecorded",
+  temperatureRecordedSchema
+);
+const HumidityRecorded = Event.discriminator(
+  "HumidityRecorded",
+  humidityRecordedSchema
+);
+const DeviceCommandIssued = Event.discriminator(
+  "DeviceCommandIssued",
+  deviceCommandIssuedSchema
+);
+
+module.exports = {
+  Event,
+  TemperatureRecorded,
+  HumidityRecorded,
+  DeviceCommandIssued,
+};

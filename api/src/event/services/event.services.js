@@ -1,12 +1,12 @@
-const Event = require("../model/event.model");
+const {Event} = require("../model/event.model");
 const User = require("../../user/model/user.model");
 
-const createEvent = async (type, details, timestamp, organizer) => {
+const createEvent = async (eventId, eventType, timestamp, payload) => {
   const result = await Event.create({
-    type,
-    details,
+    eventId,
+    eventType,
     timestamp,
-    organizer,
+    payload,
   });
   return result;
 };

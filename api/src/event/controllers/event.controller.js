@@ -2,12 +2,12 @@ const eventController = require("../services/event.services");
 
 const createEventController = async (req, res, next) => {
   try {
-    const { type, details, timestamp, organizer } = req.body;
+    const { eventId, eventType, timestamp, payload } = req.body;
     const event = await eventController.createEvent(
-      type,
-      details,
+      eventId,
+      eventType,
       timestamp,
-      organizer
+      payload
     );
     return res.status(201).json(event);
   } catch (error) {
@@ -29,8 +29,8 @@ const getEventByIdController = async (req, res, next) => {
     const id = req.params.id;
     if (!id) throw new Error("Invalid id");
     const result = await eventController.getEventById(id);
-    if(!result){
-      return res.status(404).json({message:'No Event Found'})
+    if (!result) {
+      return res.status(404).json({ message: "No Event Found" });
     }
     return res.status(200).json(result);
   } catch (error) {
@@ -42,4 +42,4 @@ module.exports = {
   createEventController,
   getEventsController,
   getEventByIdController,
-}; 
+};
