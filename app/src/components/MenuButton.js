@@ -48,6 +48,16 @@ const MenuButton = ({ navigation }) => {
             >
               <Text style={styles.menuOptionText}>Register</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                setModalVisible(false);
+                navigation.navigate('Hello');
+              }}
+              style={styles.menuOption}
+            >
+              <Text style={styles.menuOptionText}>Hello</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -65,12 +75,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   menuButton: {
-    backgroundColor: 'purple',
+    backgroundColor: 'white',
     padding: 10,
     borderRadius: 5,
   },
   menuButtonText: {
-    color: '#fff',
+    color: '#6A1B9A',
+    fontWeight: 'bold',
     fontSize: 18,
   },
   modalOverlay: {
