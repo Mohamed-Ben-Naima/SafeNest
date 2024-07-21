@@ -1,4 +1,3 @@
-// src/screens/HomeScreen.js
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import useHello from "../hooks/useHello";
@@ -29,15 +28,16 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Hello Screen</Text>
+      <Text style={styles.headerText}>Welcome, {user?.name}</Text>
+      <Text style={styles.subHeaderText}>Send Hello To Server Screen</Text>
       <MenuButton navigation={navigation} />
 
-      <TouchableOpacity onPress={handleSendHello} style={styles.menuButton}>
-        <Text>Send Hello</Text>
+      <TouchableOpacity onPress={handleSendHello} style={styles.button}>
+        <Text style={styles.buttonText}>Send Hello</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={handleLogout} style={styles.menuButton}>
-        <Text>logout</Text>
+      <TouchableOpacity onPress={handleLogout} style={styles.button}>
+        <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
 
       {responseMessage ? (
@@ -48,26 +48,41 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  menuButton: {
-    backgroundColor: "yellow",
-    padding: 10,
-    borderRadius: 5,
-  },
-
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "lightblue",
+    backgroundColor: "#f0f4f8",
+    padding: 20,
   },
-  text: {
-    color: "white",
-    fontSize: 24,
+  headerText: {
+    color: "#333",
+    fontSize: 28,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  subHeaderText: {
+    color: "#666",
+    fontSize: 20,
     marginBottom: 20,
   },
-  responseText: {
-    color: "black",
+  button: {
+    backgroundColor: "#6200ea",
+    padding: 15,
+    borderRadius: 10,
+    marginVertical: 10,
+    width: "80%",
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
     fontSize: 18,
+    fontWeight: "bold",
+  },
+  responseText: {
+    color: "#333",
+    fontSize: 16,
     marginTop: 20,
+    textAlign: "center",
   },
 });
