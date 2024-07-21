@@ -17,8 +17,11 @@ const createEventController = async (req, res, next) => {
 
 const getEventsController = async (req, res, next) => {
   try {
-    const events = await eventController.getEvents();
-    return res.status(200).json(events);
+    const result = await eventController.getEvents();
+    if (!result) {
+      return res.status(500).json({ error: "Oops something went wrong !!!" });
+    }
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
