@@ -4,9 +4,8 @@ import axios from "axios";
 
 const AuthContext = createContext();
 //change it with your own pc ip address
-//const API_URI = "http://192.168.1.101:3000/api/v1";
-const API_URI = "http://192.168.43.117:3000/api/v1";
-
+const API_URI = "http://192.168.1.101:3000/api/v1";
+//const API_URI = "http://192.168.1.55:3000/api/v1";
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(AsyncStorage.getItem("user"));

@@ -16,6 +16,7 @@ import GetStartedScreen from "./src/screens/GetStartedScreen";
 import SendHelloScreen from "./src/screens/SendHelloScreen";
 import InsideScreen from "./src/screens/InsideScreen";
 import OutsideScreen from "./src/screens/OutsideScreen";
+import LedScreen from "./src/screens/LedScreen"
 
 const Stack = createStackNavigator();
 
@@ -68,6 +69,11 @@ function AppNavigator() {
           name="Outside"
           options={{ headerShown: false }}
           component={OutsideScreen}
+        />
+        <Stack.Screen
+          name="Led"
+          options={{ headerShown: false }}
+          component={LedScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

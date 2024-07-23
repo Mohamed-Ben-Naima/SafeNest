@@ -10,7 +10,8 @@ const MenuButton = ({ navigation }) => {
     { screen: 'Home', icon: 'home' },
     { screen: 'Login', icon: 'sign-in' },
     { screen: 'Register', icon: 'user-plus' },
-    { screen: 'Hello', icon: 'envelope' }
+    { screen: 'Hello', icon: 'envelope' },
+    { screen: 'Led', icon: 'plus' }
   ];
 
   return (

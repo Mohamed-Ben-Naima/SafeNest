@@ -45,7 +45,7 @@ export default function RegisterScreen({ navigation }) {
     if (result.status) {
       Alert.alert("Success", result.message);
       // Navigate to the HomeScreen after successful registration
-      navigation.navigate("Home");
+      navigation.navigate("Login");
     } else {
       Alert.alert("Error", result.message);
     }

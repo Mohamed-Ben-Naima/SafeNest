@@ -15,7 +15,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 export default function HomeScreen({ navigation }) {
   const { user } = useAuth();
 
-  // Dummy data for rooms and devices
+  // Dummy data for rooms, devices, and controls
   const [rooms, setRooms] = useState([
     {
       name: "Inside",
@@ -28,6 +28,24 @@ export default function HomeScreen({ navigation }) {
       status: "Lights on, Appliances off",
       icon: "home-export-outline",
       to: "Outside",
+    },
+  ]);
+
+  const [controls, setControls] = useState([
+    {
+      name: "Humidity",
+      icon: "water",
+      action: () => alert("Humidity control triggered!"),
+    },
+    {
+      name: "Temperature",
+      icon: "thermometer",
+      action: () => alert("Temperature control triggered!"),
+    },
+    {
+      name: "Security",
+      icon: "shield-lock-outline",
+      action: () => alert("Security control triggered!"),
     },
   ]);
 
@@ -68,6 +86,20 @@ export default function HomeScreen({ navigation }) {
             <Icon name="chevron-right" size={20} color="#6A1B9A" />
           </TouchableOpacity>
         ))}
+
+        <Text style={styles.sectionTitle}>Control Panel</Text>
+        <View style={styles.controlsContainer}>
+          {controls.map((control, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.controlButton}
+              onPress={control.action}
+            >
+              <Icon name={control.icon} size={24} color="#fff" />
+              <Text style={styles.controlText}>{control.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
 
         <Text style={styles.sectionTitle}>Quick Actions</Text>
         <View style={styles.quickActionsContainer}>
@@ -178,20 +210,20 @@ const styles = StyleSheet.create({
     marginTop: 5,
     textAlign: "center",
   },
-  scenesContainer: {
+  controlsContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
     marginVertical: 20,
   },
-  sceneCard: {
-    backgroundColor: "#7B1FA2",
+  controlButton: {
+    backgroundColor: "#6A1B9A",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-    width: "40%",
+    width: "30%",
   },
-  sceneText: {
+  controlText: {
     color: "#fff",
     fontSize: 14,
     marginTop: 5,
