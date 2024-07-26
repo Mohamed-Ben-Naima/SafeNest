@@ -3,8 +3,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const AuthContext = createContext();
-//change it with your own pc ip address
-const API_URI = "http://192.168.1.101:3000";
+//change it with your own pc ip address the second one is on the cloud
+//const API_URI = "http://192.168.1.101:3000";
+const API_URI = " https://smartnest-server.onrender.com";
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(AsyncStorage.getItem("user"));
@@ -43,7 +44,7 @@ export const AuthContextProvider = ({ children }) => {
     let result = { message: "", status: false };
     try {
       setIsPending(true);
-      const response = await axios.post(`${API_URI}/auth/login`, {
+      const response = await axios.post(`${API_URI}/api/v1/auth/login`, {
         email,
         password,
       });
