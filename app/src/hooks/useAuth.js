@@ -4,7 +4,7 @@ import axios from "axios";
 
 const AuthContext = createContext();
 //change it with your own pc ip address
-const API_URI = "http://192.168.1.101:3000/api/v1";
+const API_URI = "http://192.168.1.101:3000";
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(AsyncStorage.getItem("user"));
@@ -14,7 +14,7 @@ export const AuthContextProvider = ({ children }) => {
     let result = { message: "", status: false };
     try {
       setIsPending(true);
-      const response = await axios.post(`${API_URI}/auth/register`, {
+      const response = await axios.post(`${API_URI}/api/v1/auth/register`, {
         username,
         email,
         password,
